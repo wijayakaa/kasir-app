@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Col, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from '../utils/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUtensils,faCoffee,faCheese } from '@fortawesome/free-solid-svg-icons';
+
+
+const Icon = ({nama}) => {
+  if(nama === "Makanan") return <FontAwesomeIcon icon={faUtensils} className="mr-2" />;
+  if(nama === "Minuman") return <FontAwesomeIcon icon={faCoffee}  />;
+  if(nama === "Cemilan") return <FontAwesomeIcon icon={faCheese} className="mr-2" />;
+}
 
 export default class ListCategories extends Component {
 
@@ -14,7 +23,7 @@ export default class ListCategories extends Component {
     }
 
     componentDidMount(){
-        axios.get(API_URL + "products") 
+        axios.get(API_URL + "categories") 
           .then(res => {
             const categories     = res.data;
             this.setState({ categories });
@@ -26,15 +35,24 @@ export default class ListCategories extends Component {
 
     render() {
         const {categories} = this.state;
-        console.log("Categories : ", this.state.categories);
+        const {changeCategory, categoryChoosen} = this.props;
         return(
             <Col md={2} mt={2}>
-                <h4><strong>Daftar kategori</strong></h4>
+                <h4>
+                  <strong>Daftar kategori</strong>
+                </h4>
                 <hr/>
                 <ListGroup>
                     {categories && categories.map((category) => (
-                        <ListGroup.Item>
-                            {category.nama}
+                        <ListGroup.Item
+                         key={category.id} 
+                         onClick={() => changeCategory(category.nama)} 
+                         className={categoryChoosen === category.nama && "active-category"}
+                         style={{cursor:'pointer'}}
+                         >
+                          <h5>
+                            <Icon nama={category.nama}/> {category.nama}
+                          </h5>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
