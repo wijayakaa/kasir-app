@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
-Project belajar saya, menggunakan react dan bootstrap
+ Saya menggunakan react, axios, jsonplaceholder dan bootstrap di dalam project ini
+
+##
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
